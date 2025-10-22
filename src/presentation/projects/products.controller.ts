@@ -26,9 +26,13 @@ export class ProjectsController {
   };
 
   public getAllProducts = async (req: Request, res: Response) => {
+
     // return res.status(200).json({ ok: true });
-    const allProducts = await prisma.project.findMany();
-    // console.log({ allProducts });
+    const allProducts = await prisma.project.findMany({
+      orderBy: {
+        createdAt: "asc",
+      },
+    });
 
     return res.status(200).json(allProducts);
   };

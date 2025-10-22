@@ -9,10 +9,15 @@ export class ProductsRoute {
     const router = Router();
     const authMiddleware = new AuthMiddleware();
 
-    router.use(authMiddleware.validateJWT);
+    // router.use(authMiddleware.validateJWT);
 
     router.get("/", projectsController.getAllProducts);
-    router.post("/", upload.single("image"), projectsController.createProduct);
+    router.post(
+      "/",
+      authMiddleware.validateJWT,
+      upload.single("image"),
+      projectsController.createProduct
+    );
     router.get("/:idProduct", projectsController.getOneProduct);
     router.delete("/:idProduct", projectsController.deleteProduct);
     router.put(
